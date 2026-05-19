@@ -1,0 +1,40 @@
+# Local secrets and runtime config
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Test and coverage output
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.bak
+.hermes/
+*_triggers_active.csv
+trigger_defaults.csv
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini

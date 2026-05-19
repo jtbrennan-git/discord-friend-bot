@@ -1,0 +1,44 @@
+app = 'discord-friend-bot'
+primary_region = 'lhr'
+
+[build]
+
+[env]
+  PORT = '8080'
+  BOT_LOG_PATH = '/data/bot.log'
+  BOT_LOG_MAX_BYTES = '5242880'
+  BOT_LOG_BACKUP_COUNT = '10'
+  IMPROVEMENTS_LOG = '/data/bot_improvements.log'
+  MEMORY_DB_PATH = '/data/bot_memory.db'
+  PROFILES_DB = '/data/bot_profiles.db'
+  FEEDBACK_DB_PATH = '/data/bot_feedback.db'
+  ACTION_AUDIT_DB_PATH = '/data/bot_actions.db'
+  STYLE_GUIDE_DB_PATH = '/data/bot_style.db'
+  TOPIC_LOG_DB_PATH = '/data/bot_topics.db'
+  CHANNEL_STATE_DB = '/data/bot_channel_state.db'
+  HERMES_HOME = '/data/hermes'
+  HERMES_PROFILE_DIR = '/data/hermes/profiles'
+  TRIGGER_DEFAULTS_CSV = 'trigger_defaults.csv'
+  TRIGGER_DEFAULTS_IMPORT_ENABLED = 'true'
+
+[mounts]
+  source = 'bot_data'
+  destination = '/data'
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "10s"
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1

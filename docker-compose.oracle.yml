@@ -1,0 +1,38 @@
+services:
+  discord-friend-bot:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: "8080"
+      BOT_LOG_PATH: /data/bot.log
+      BOT_LOG_MAX_BYTES: "5242880"
+      BOT_LOG_BACKUP_COUNT: "10"
+      IMPROVEMENTS_LOG: /data/bot_improvements.log
+      MEMORY_DB_PATH: /data/bot_memory.db
+      PROFILES_DB: /data/bot_profiles.db
+      FEEDBACK_DB_PATH: /data/bot_feedback.db
+      ACTION_AUDIT_DB_PATH: /data/bot_actions.db
+      STYLE_GUIDE_DB_PATH: /data/bot_style.db
+      TOPIC_LOG_DB_PATH: /data/bot_topics.db
+      CHANNEL_STATE_DB: /data/bot_channel_state.db
+      HERMES_HOME: /data/hermes
+      HERMES_PROFILE_DIR: /data/hermes/profiles
+      HERMES_ENABLED: "true"
+      HERMES_BINARY: hermes
+      HERMES_PROFILE: discord-bot
+      HERMES_PROVIDER: openrouter
+      HERMES_MODEL: ${HERMES_MODEL:-openrouter/owl-alpha}
+      HERMES_ADMIN_TOOLSETS: all
+      HERMES_TIMEOUT_SECONDS: "90"
+      HERMES_MAX_OUTPUT_CHARS: "4000"
+    volumes:
+      - ./data:/data
+    ports:
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080', timeout=2).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
